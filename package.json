@@ -1,0 +1,19 @@
+{
+  "name": "erp_tp",
+  "version": "1.0.0",
+  "description": "TP3",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tsuuki/ERP_TP.git"
+  },
+  "author": "Emilie Mohammed Quentin Jordan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tsuuki/ERP_TP/issues"
+  },
+  "homepage": "https://github.com/Tsuuki/ERP_TP#readme"
+}
