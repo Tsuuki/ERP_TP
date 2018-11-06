@@ -20,5 +20,6 @@
   "homepage": "https://github.com/Tsuuki/ERP_TP#readme",
   "devDependencies": {
     "electron": "^3.0.3"
-  }
+  },
+  "dependencies": {}
 }
