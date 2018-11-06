@@ -1,10 +1,21 @@
-var listData = $("#listData");
+var listDom = $("#listDataEmployees");
 for(var i=0;i<employees.length;i++) {
-    listData.append("<div>");
-    listData.append("<span>" + employees[i].name + "</span>");
-    listData.append("<span>" + employees[i].firstname + "</span>");
-    listData.append("<span>" + employees[i].jobType + "</span>");
-    listData.append("<span>" + employees[i].efficiency + "</span>");
-    listData.append("<span>" + employees[i].hiringDate + "</span>");
-    listData.append("</div>");
+    listDom.append("<div>");
+    listDom.append("<span>" + employees[i].name + "</span>");
+    listDom.append("<span>" + employees[i].firstname + "</span>");
+    listDom.append("<span>" + employees[i].jobType + "</span>");
+    listDom.append("<span>" + employees[i].efficiency + "</span>");
+    listDom.append("<span>" + employees[i].hiringDate + "</span>");
+    listDom.append("</div>");
+}
+
+var listDom = $("#listDataProjects");
+for(var i=0;i<projects.length;i++) {
+    listDom.append("<div>");
+    listDom.append("<span>" + projects[i].client + "</span>");
+    listDom.append("<span>" + projects[i].dateStart + "</span>");
+    listDom.append("<span>" + projects[i].remainDevDays + "</span>");
+    listDom.append("<span>" + projects[i].remainProjDays + "</span>");
+    listDom.append("<span>" + projects[i].shipment + "</span>");
+    listDom.append("</div>");
 }
