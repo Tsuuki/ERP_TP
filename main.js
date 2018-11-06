@@ -5,15 +5,29 @@ let mainWindow;
 function createWindow () {
 
     // Créer le browser window
-    mainWindow = new BrowserWindow({ width: 800, height: 600 });
+    mainWindow = new BrowserWindow({ 
+        width: 1280, 
+        height: 720, 
+        icon: "assets/icon.png",
+        title: "ERP : Mohamed, Emilie, Jordan, Quentin",  
+    });
 
     // Charge le fichier de l'application
-    mainWindow.loadFile('index.html');
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     // npm run debug
     if(process.argv[2] && process.argv[2] === "debug") {
         mainWindow.webContents.openDevTools();
     }
+
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    })
+
+    /*const chimdWindow = new BrowserWindow({
+        parent: mainWindow,
+        frame: false,
+    });*/
 }
 
 app.on('ready', createWindow);
