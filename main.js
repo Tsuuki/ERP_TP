@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require ('electron');
+const fs = require("fs");
+const dataFile = JSON.parse(fs.readFileSync("data.json"));
 
 let mainWindow;
 
