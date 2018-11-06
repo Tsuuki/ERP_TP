@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <title>ERP : Mohamed, Emilie, Jordan, Quentin</title>
+    <link rel="import" href="view/project.html"/>
 
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    
+    <script type="text/javascript" src="js/index.js"></script>
   </head>
   <body>
     <h1>Hello World!</h1>
     Nous utilisons Node <script>document.write(process.versions.node)</script>,
     Chrome <script>document.write(process.versions.chrome)</script>,
     et Electron <script>document.write(process.versions.electron)</script>.
+    <button id="manageEmployees" type="button">Gérer les employés</button>
+    <button id="manageProjects" type="button">Gérer les projets</button>
   </body>
-  <button id="manage_emp" type="button">Gérer les employés</button>
 </html>

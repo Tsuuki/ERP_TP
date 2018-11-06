@@ -5,7 +5,6 @@ const dataFile = JSON.parse(fs.readFileSync("data.json"));
 let mainWindow;
 
 function createWindow () {
-
     // Créer le browser window
     mainWindow = new BrowserWindow({ 
         width: 1280, 
