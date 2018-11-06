@@ -1,15 +1,14 @@
 {
-    "efficience": 100,
     "employees": [
-        {"job": "CEO", "name": "Hiertz", "prename": "Jordan"},
-        {"job": "Chef de projet", "name": "Abdoul-Malik", "prename": "Emilie"},
-        {"job": "Responsable technique", "name": "Dell", "prename": "Quentin"},
-        {"job": "Développeur", "name": "Azzouz", "prename": "Mohamed"},
-        {"job": "Développeur", "name": "Derr", "prename": "Justine"}
+        {"id": 0, "jobType": "CEO", "name": "Hiertz", "firstname": "Jordan", "efficiency": 100, "hiringDate": "01/01/2018"},
+        {"id": 1, "jobType": "CP", "name": "Abdoul-Malik", "firstname": "Emilie", "efficiency": 100, "hiringDate": "01/01/2018"},
+        {"id": 2, "jobType": "RT", "name": "Dell", "firstname": "Quentin", "efficiency": 100, "hiringDate": "01/01/2018"},
+        {"id": 3, "jobType": "DEV", "name": "Azzouz", "firstname": "Mohamed", "efficiency": 100, "hiringDate": "01/01/2018"},
+        {"id": 4, "jobType": "DEV", "name": "Derr", "firstname": "Justine", "efficiency": 100, "hiringDate": "01/01/2018"}
     ],
     "projects": [
-        {"client": "AIRBUS", "dateStart": "01/06/2018", "remainDevDays": "150", "remainProjDays": "40", "shipment": "01/12/2018"},
-        {"client": "NINETENDO", "dateStart": "01/06/2018", "remainDevDays": "75", "remainProjDays": "25", "shipment": "01/09/2018"},
-        {"client": "HTC VR", "dateStart": "01/06/2018", "remainDevDays": "150", "remainProjDays": "45", "shipment": "01/01/2019"}
+        {"id": 0, "client": "AIRBUS", "dateStart": "01/06/2018", "remainDevDays": "150", "remainProjDays": "40", "shipment": "01/12/2018"},
+        {"id": 1, "client": "NINETENDO", "dateStart": "01/06/2018", "remainDevDays": "75", "remainProjDays": "25", "shipment": "01/09/2018"},
+        {"id": 2, "client": "HTC VR", "dateStart": "01/06/2018", "remainDevDays": "150", "remainProjDays": "45", "shipment": "01/01/2019"}
     ]
 }
