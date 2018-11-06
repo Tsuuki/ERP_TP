@@ -3,7 +3,6 @@ const { app, BrowserWindow } = require ('electron');
 let mainWindow;
 
 function createWindow () {
-
     // Créer le browser window
     mainWindow = new BrowserWindow({ 
         width: 1280, 
@@ -30,7 +29,17 @@ function createWindow () {
     });*/
 }
 
-app.on('ready', createWindow);
+app.on('ready', async () => {
+    try {
+        let pug = await setupPug({pretty: true}, locals);
+        pug.on('error', err => console.error('electron-pug error', err));
+    }
+    catch (err) {
+
+    }
+
+    createWindow();
+});
 
 app.on('window-all-closed', () => {
     // Sur macOS, il est commun pour une application et leur barre de menu
