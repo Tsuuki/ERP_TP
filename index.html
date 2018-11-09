@@ -16,11 +16,27 @@
     <button id="manageEmployees" type="button">Gérer les employés</button>
     <button id="manageProjects" type="button">Gérer les projets</button>
 
-    <div id="listData">
+    <div id="listDataContainer">
 			<span class="listDataTitle">Employees</span>
-			<div id="listDataEmployees"></div>
+			<div id="listDataEmp">
+                <div class="legend">
+                    <span>Nom</span>
+                    <span>Prénom</span>
+                    <span>Titre</span>
+                    <span>Efficience</span>
+                    <span>Date d'embauche</span>
+                </div>
+            </div>
 			<span class="listDataTitle">Projects</span>
-			<div id="listDataProjects"></div>
+			<div id="listDataProj">
+                <div class="legend">
+                    <span>Client</span>
+                    <span>Date de début</span>
+                    <span>Jours restants (dev)</span>
+                    <span>Jours restants (proj)</span>
+                    <span>Date de livraison</span>
+                </div>
+            </div>
     </div>
     
     <script type="text/javascript" src="js/employees.js"></script>

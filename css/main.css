@@ -6,3 +6,27 @@ h1 {
     color: red;
 }
 
+#listDataContainer .listDataTitle {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#listDataEmp span{
+    display: inline-block;
+    width: 120px;
+}
+
+#listDataEmp .legend {
+    font-weight: bold;
+}
+
+#listDataProj span{
+    display: inline-block;
+    width: 120px;
+}
+
+#listDataProj .legend {
+    font-weight: bold;
+}
