@@ -3,8 +3,6 @@ const path = require("path");
 const fs = require("fs");
 const dataFile = JSON.parse(fs.readFileSync("data.json"));
 
-let mainWindow;
-
 function initialize () {
     const shouldQuit = makeSingleInstance()
     if (shouldQuit) return app.quit()
@@ -19,8 +17,8 @@ function initialize () {
           }
       
     
-          mainWindow = new BrowserWindow(windowOptions)
-          mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
+          mainWindow = new BrowserWindow(windowOptions);
+          mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
     
         // npm run debug
         if(process.argv[2] && process.argv[2] === "debug") {
@@ -49,7 +47,8 @@ function initialize () {
         // Sur macOS, il est commun de re-créer une fenêtre de l'application quand
         // l'icône du dock est cliquée et qu'il n'y a pas d'autres fenêtres d'ouvertes.
         if (win === null) {
-            createWindow()
+            createWindow();
+            mainWindow.webContents.send('projects', projects);
         }
     })
 }
