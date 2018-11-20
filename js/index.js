@@ -11,3 +11,15 @@ for(var i=0;i<projects.length;i++) {
     var myDom = "<div><span>" + projects[i].client + "</span><span>" + projects[i].dateStart + "</span><span>" + projects[i].remainDevDays + "</span><span>" + projects[i].remainProjDays + "</span><span>" + projects[i].shipment + "</span></div>";
     listDom.append(myDom);
 }
+
+const windowBtnProjects = document.getElementById('manageProjects');
+
+windowBtnProjects.addEventListener('click', (event) => {
+  const modalPath = path.join('file://', __dirname, '/view/projects.html')
+  console.log(modalPath);
+  let win = new BrowserWindow({ width: 400, height: 320 })
+
+  win.on('close', () => { win = null })
+  win.loadURL(modalPath)
+  win.show()
+});
