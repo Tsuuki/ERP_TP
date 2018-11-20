@@ -7,8 +7,8 @@
         {"id": 4, "jobType": "DEV", "name": "Derr", "firstname": "Justine", "efficiency": 100, "hiringDate": "01/01/2018"}
     ],
     "projects": [
-        {"id": 0, "client": "AIRBUS", "dateStart": "01/06/2018", "remainDevDays": "150", "remainProjDays": "40", "shipment": "01/12/2018"},
-        {"id": 1, "client": "NINETENDO", "dateStart": "01/06/2018", "remainDevDays": "75", "remainProjDays": "25", "shipment": "01/09/2018"},
-        {"id": 2, "client": "HTC VR", "dateStart": "01/06/2018", "remainDevDays": "150", "remainProjDays": "45", "shipment": "01/01/2019"}
+        {"id": 0, "client": "AIRBUS", "dateStartDev": "01/06/2018", "dateStartProj": "01/06/2018", "remainDevDays": 180, "remainProjDays": 48, "shipment": "01/12/2018"},
+        {"id": 1, "client": "NINETENDO", "dateStartDev": "01/06/2018", "dateStartProj": "01/06/2018", "remainDevDays": 90, "remainProjDays": 30, "shipment": "01/09/2018"},
+        {"id": 2, "client": "HTC VR", "dateStartDev": "01/06/2018", "dateStartProj": "01/06/2018", "remainDevDays": 180, "remainProjDays": 54, "shipment": "01/01/2019"}
     ]
 }
