@@ -14,14 +14,9 @@ for(var i=0;i<projects.length;i++) {
 
 var sortProjectByDate = function(p) {
     p.sort((a, b) => {
-        return parseDate(a.shipment) > parseDate(b.shipment);
+        return new Date(a.shipment) > new Date(b.shipment);
     })
 };
-
-var parseDate = function(str) {
-    var mdy = str.split('/');
-    return new Date(mdy[2], mdy[1], mdy[0]);
-}
 
 // Count number of business days between two dates
 var getBusinessDatesCount = function(startDate, endDate) {
@@ -70,6 +65,15 @@ var isDispo = function() {
     var countDevEmployee = 0;
     var countProjEmployee = 0;
 
+    // Count number of employees in each side(dev or project)
+    employees.forEach(employee => {
+        if(employee.jobType === "DEV" || employee.jobType === "RT") {
+            countDevEmployee++;
+        } else if(employee.jobType === "CP") {
+            countProjEmployee++;
+        }
+    });
+
     // Can we deliver the project on time
     var canDeliver = true;
 
@@ -78,44 +82,37 @@ var isDispo = function() {
     var jourPH = 0;
 
     // The start date of project on dev or project side
-    var dateStartDev = null;
-    var dateStartProj = null;
+    var dateStartDev = new Date(projects[0].dateStartDev);
+    var dateStartProj = new Date(projects[0].dateStartProj);
 
     projects.forEach(project => {
-        console.log(project.client);
-        // Calculate date of project start
-        if(jourDH !== 0) {
-            dateStartDev = addWorkDays(parseDate(project.dateStartDev), jourDH);
-        } else {
-            dateStartDev = parseDate(project.dateStartDev);
-        }
 
+        console.log(project.client);
         console.log("project.dateStartDev: " + dateStartDev);
-        
-        // Count number of employees in each side(dev or project)
-        employees.forEach(employee => {
-            if(employee.jobType === "DEV" || employee.jobType === "RT") {
-                countDevEmployee++;
-            } else if(employee.jobType === "CP") {
-                countProjEmployee++;
-            }
-        });
+        console.log("project.dateStartProj: " + dateStartProj);
+
         
         // Get number of days remaining to complete project
         jourDH = Math.round(project.remainDevDays / countDevEmployee);
         jourPH = Math.round(project.remainProjDays / countProjEmployee);
-        console.log("jourDH :" + jourDH);
-        console.log("jourPH :" + jourPH);
+
+        console.log("jour à travailler pour l'équipe dev :" + jourDH);
+        console.log("jour à travailler pour l'equipe proj  :" + jourPH);
         
         // Get working days remaining until end of project
-        var globalDevDaysRemaining = getBusinessDatesCount(parseDate(project.dateStartDev), parseDate(project.shipment));
-        var globalProjDaysRemaining = getBusinessDatesCount(parseDate(project.dateStartProj), parseDate(project.shipment));
+        var globalDevDaysRemaining = getBusinessDatesCount(dateStartDev, new Date(project.shipment));
+        var globalProjDaysRemaining = getBusinessDatesCount(dateStartProj, new Date(project.shipment));
+        
         console.log("globalDevDaysRemaining :" + globalDevDaysRemaining);
         console.log("globalProjDaysRemaining :" + globalProjDaysRemaining);
 
         // Check that number of working days necessary is inferior to remaining days until end of project, else we are in deep shit
         if(jourDH > globalDevDaysRemaining || jourPH > globalProjDaysRemaining) {
             canDeliver = false;
+        }
+        else {
+            dateStartDev = addWorkDays(dateStartDev, jourDH);
+            dateStartProj = addWorkDays(dateStartProj, jourPH);
         }
     });
 
