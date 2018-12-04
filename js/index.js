@@ -21,7 +21,7 @@ var sortProjectByDate = function(p) {
 // Count number of business days between two dates
 var getBusinessDatesCount = function(startDate, endDate) {
     var count = 0;
-    var curDate = startDate;
+    var curDate = new Date(startDate.getTime());
     while (curDate <= endDate) {
         var dayOfWeek = curDate.getDay();
         if(!((dayOfWeek == 6) || (dayOfWeek == 0)))
@@ -41,7 +41,9 @@ var addWorkDays = function(startDate, days) {
         console.log("Value provided for \"startDate\" was not a Date object");
         return
     }
-    var dow = startDate.getDay();
+
+    var date = new Date(startDate.getTime());
+    var dow = date.getDay();
     var daysToAdd = parseInt(days);
     if (dow == 0)
         daysToAdd++;
@@ -54,8 +56,8 @@ var addWorkDays = function(startDate, days) {
                 daysToAdd -= 2;
         }
     }
-    startDate.setDate(startDate.getDate() + daysToAdd);
-    return startDate;
+    date.setDate(date.getDate() + daysToAdd);
+    return date;
 }
 
 var getDaysNbrDiff = function(endDate, startDate) {
@@ -79,6 +81,8 @@ var isDispo = function() {
     // The start date of project on dev or project side
     var dateStartDev = new Date(projects[0].dateStartDev);
     var dateStartProj = new Date(projects[0].dateStartProj);
+    var dateFinDev = null;
+    var dateFinProj = null;
 
     // Get efficiency
     var efficiency = 0
@@ -126,9 +130,13 @@ var isDispo = function() {
             canDeliver = false;
             console.log("On manque de ressources de gestion de projet, on sera short le " + new Date(project.shipment));
         } else {
-            dateStartDev = addWorkDays(dateStartDev, jourDH);
-            dateStartProj = addWorkDays(dateStartProj, jourPH);
+            dateFinDev = addWorkDays(dateStartDev, jourDH);
+            dateFinProj = addWorkDays(dateStartProj, jourPH);
+            dateStartDev = addWorkDays(dateFinDev, 1);
+            dateStartProj = addWorkDays(dateFinProj, 1);
         }
+        console.log("project.dateFinDev: " + dateFinDev);
+        console.log("project.dateFinProj: " + dateFinProj);
         console.log("---------------------------------------------");
     });
 

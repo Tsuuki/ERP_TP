@@ -1,14 +1,14 @@
 {
     "employees": [
-        {"id": 0, "jobType": "CEO", "name": "Hiertz", "firstname": "Jordan", "efficiency": 100, "hiringDate": "2018-01-01"},
-        {"id": 1, "jobType": "CP", "name": "Abdoul-Malik", "firstname": "Emilie", "efficiency": 100, "hiringDate": "2018-01-01"},
-        {"id": 2, "jobType": "RT", "name": "Dell", "firstname": "Quentin", "efficiency": 100, "hiringDate": "2018-01-01"},
-        {"id": 3, "jobType": "DEV", "name": "Azzouz", "firstname": "Mohamed", "efficiency": 100, "hiringDate": "2018-01-01"},
-        {"id": 4, "jobType": "DEV", "name": "Derr", "firstname": "Justine", "efficiency": 100, "hiringDate": "2018-01-01"}
+        {"id": 0, "jobType": "CEO", "name": "Hiertz", "firstname": "Jordan", "efficiency": 80, "hiringDate": "2018-01-01"},
+        {"id": 1, "jobType": "CP", "name": "Abdoul-Malik", "firstname": "Emilie", "efficiency": 80, "hiringDate": "2018-01-01"},
+        {"id": 2, "jobType": "RT", "name": "Dell", "firstname": "Quentin", "efficiency": 80, "hiringDate": "2018-01-01"},
+        {"id": 3, "jobType": "DEV", "name": "Azzouz", "firstname": "Mohamed", "efficiency": 80, "hiringDate": "2018-01-01"},
+        {"id": 4, "jobType": "DEV", "name": "Derr", "firstname": "Justine", "efficiency": 80, "hiringDate": "2018-01-01"}
     ],
     "projects": [
-        {"id": 0, "client": "AIRBUS", "dateStartDev": "2018-06-01", "dateStartProj": "2018-06-01", "remainDevDays": 180, "remainProjDays": 48, "shipment": "2018-12-01"},
-        {"id": 1, "client": "NINETENDO", "dateStartDev": "2018-06-01", "dateStartProj": "2018-06-01", "remainDevDays": 90, "remainProjDays": 30, "shipment": "2018-09-01"},
-        {"id": 2, "client": "HTC VR", "dateStartDev": "2018-06-01", "dateStartProj": "2018-06-01", "remainDevDays": 180, "remainProjDays": 54, "shipment": "2019-01-01"}
+        {"id": 0, "client": "AIRBUS", "dateStartDev": "2018-06-01", "dateStartProj": "2018-06-01", "remainDevDays": 150, "remainProjDays": 40, "shipment": "2018-12-01"},
+        {"id": 1, "client": "NINETENDO", "dateStartDev": "2018-06-01", "dateStartProj": "2018-06-01", "remainDevDays": 75, "remainProjDays": 25, "shipment": "2018-09-01"},
+        {"id": 2, "client": "HTC VR", "dateStartDev": "2018-06-01", "dateStartProj": "2018-06-01", "remainDevDays": 150, "remainProjDays": 45, "shipment": "2019-01-01"}
     ]
 }
