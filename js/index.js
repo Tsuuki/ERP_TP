@@ -58,21 +58,16 @@ var addWorkDays = function(startDate, days) {
     return startDate;
 }
 
+var getDaysNbrDiff = function(endDate, startDate) {
+    return Math.round((endDate-startDate)/(1000*60*60*24));
+}
+
 // Check if projects can be delivered in time
 var isDispo = function() {
 
     // Number of employees on dev or project side
     var countDevEmployee = 0;
     var countProjEmployee = 0;
-
-    // Count number of employees in each side(dev or project)
-    employees.forEach(employee => {
-        if(employee.jobType === "DEV" || employee.jobType === "RT") {
-            countDevEmployee++;
-        } else if(employee.jobType === "CP") {
-            countProjEmployee++;
-        }
-    });
 
     // Can we deliver the project on time
     var canDeliver = true;
@@ -85,16 +80,33 @@ var isDispo = function() {
     var dateStartDev = new Date(projects[0].dateStartDev);
     var dateStartProj = new Date(projects[0].dateStartProj);
 
+    // Get efficiency
+    var efficiency = 0
+
     projects.forEach(project => {
+
+        // Count number of available employees
+        countDevEmployee = 0;
+        countProjEmployee = 0;
 
         console.log(project.client);
         console.log("project.dateStartDev: " + dateStartDev);
         console.log("project.dateStartProj: " + dateStartProj);
 
+        // Count number of employees in each side(dev or project) and check if they can work (hired employees don't work for 4 months)
+        employees.forEach(employee => {
+            var hiringDate = new Date(employee.hiringDate);
+            efficiency = employee.efficiency;
+            if((employee.jobType === "DEV" || employee.jobType === "RT") && getDaysNbrDiff(dateStartDev, hiringDate) >= 120) {
+                countDevEmployee++;
+            } else if(employee.jobType === "CP" && getDaysNbrDiff(dateStartProj, hiringDate) >= 120) {
+                countProjEmployee++;
+            }
+        });
         
         // Get number of days remaining to complete project
-        jourDH = Math.round(project.remainDevDays / countDevEmployee);
-        jourPH = Math.round(project.remainProjDays / countProjEmployee);
+        jourDH = Math.round(project.remainDevDays / countDevEmployee) * (100 / efficiency);
+        jourPH = Math.round(project.remainProjDays / countProjEmployee) * (100 / efficiency);
 
         console.log("jour à travailler pour l'équipe dev :" + jourDH);
         console.log("jour à travailler pour l'equipe proj  :" + jourPH);
@@ -107,13 +119,17 @@ var isDispo = function() {
         console.log("globalProjDaysRemaining :" + globalProjDaysRemaining);
 
         // Check that number of working days necessary is inferior to remaining days until end of project, else we are in deep shit
-        if(jourDH > globalDevDaysRemaining || jourPH > globalProjDaysRemaining) {
+        if(jourDH > globalDevDaysRemaining) {
             canDeliver = false;
-        }
-        else {
+            console.log("On manque de ressources de dev, on sera short le " + new Date(project.shipment));
+        } else if(jourPH > globalProjDaysRemaining) {
+            canDeliver = false;
+            console.log("On manque de ressources de gestion de projet, on sera short le " + new Date(project.shipment));
+        } else {
             dateStartDev = addWorkDays(dateStartDev, jourDH);
             dateStartProj = addWorkDays(dateStartProj, jourPH);
         }
+        console.log("---------------------------------------------");
     });
 
     return canDeliver;
