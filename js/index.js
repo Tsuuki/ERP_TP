@@ -65,22 +65,25 @@ var addWorkDays = function(startDate, days) {
 
 // Check if projects can be delivered in time
 var isDispo = function() {
-    var surplusProj = 0;
-    var surplusDev = 0;
 
+    // Number of employees on dev or project side
     var countDevEmployee = 0;
     var countProjEmployee = 0;
 
+    // Can we deliver the project on time
     var canDeliver = true;
 
+    // Number of days to complete a project for dev or project side
     var jourDH = 0;
     var jourPH = 0;
 
+    // The start date of project on dev or project side
     var dateStartDev = null;
     var dateStartProj = null;
 
     projects.forEach(project => {
-
+        console.log(project.client);
+        // Calculate date of project start
         if(jourDH !== 0) {
             dateStartDev = addWorkDays(parseDate(project.dateStartDev), jourDH);
         } else {
@@ -88,7 +91,8 @@ var isDispo = function() {
         }
 
         console.log("project.dateStartDev: " + dateStartDev);
-
+        
+        // Count number of employees in each side(dev or project)
         employees.forEach(employee => {
             if(employee.jobType === "DEV" || employee.jobType === "RT") {
                 countDevEmployee++;
@@ -96,16 +100,20 @@ var isDispo = function() {
                 countProjEmployee++;
             }
         });
-
+        
+        // Get number of days remaining to complete project
         jourDH = Math.round(project.remainDevDays / countDevEmployee);
         jourPH = Math.round(project.remainProjDays / countProjEmployee);
         console.log("jourDH :" + jourDH);
         console.log("jourPH :" + jourPH);
-
+        
+        // Get working days remaining until end of project
         var globalDevDaysRemaining = getBusinessDatesCount(parseDate(project.dateStartDev), parseDate(project.shipment));
         var globalProjDaysRemaining = getBusinessDatesCount(parseDate(project.dateStartProj), parseDate(project.shipment));
         console.log("globalDevDaysRemaining :" + globalDevDaysRemaining);
         console.log("globalProjDaysRemaining :" + globalProjDaysRemaining);
+
+        // Check that number of working days necessary is inferior to remaining days until end of project, else we are in deep shit
         if(jourDH > globalDevDaysRemaining || jourPH > globalProjDaysRemaining) {
             canDeliver = false;
         }
