@@ -1,16 +1,28 @@
 // Insert employees data into DOM
-var listDom = $("#listDataEmp");
-for(var i=0;i<employees.length;i++) {
-    var myDom = "<div><span>" + employees[i].name + "</span><span>" + employees[i].firstname + "</span><span>" + employees[i].jobType + "</span><span>" + employees[i].efficiency + "</span><span>" + employees[i].hiringDate + "</span></div>";
-    listDom.append(myDom);
+var displayEmployees = function() {
+    $("#listDataEmp").html("");
+    var listDom = $("#listDataEmp");
+
+    for(var i=0;i<employees.length;i++) {
+        var myDom = "<div><span>" + employees[i].name + "</span><span>" + employees[i].firstname + "</span><span>" + employees[i].jobType + "</span><span>" + employees[i].efficiency + "</span><span>" + employees[i].hiringDate + "</span></div>";
+        listDom.append(myDom);
+    }
 }
 
+displayEmployees();
+
 // Insert project data into DOM
-var listDom = $("#listDataProj");
-for(var i=0;i<projects.length;i++) {
-    var myDom = "<div><span>" + projects[i].client + "</span><span>" + projects[i].dateStartDev + "</span><span>" + projects[i].remainDevDays + "</span><span>" + projects[i].remainProjDays + "</span><span>" + projects[i].shipment + "</span></div>";
-    listDom.append(myDom);
+var displayProject = function() {
+    $("#listDataProj").html("");
+    var listDom = $("#listDataProj");
+
+    for(var i=0;i<projects.length;i++) {
+        var myDom = "<div><span>" + projects[i].client + "</span><span>" + projects[i].dateStartDev + "</span><span>" + projects[i].remainDevDays + "</span><span>" + projects[i].remainProjDays + "</span><span>" + projects[i].shipment + "</span></div>";
+        listDom.append(myDom);
+    }
 }
+
+displayProject();
 
 var sortProjectByDate = function(p) {
     p.sort((a, b) => {
@@ -60,8 +72,23 @@ var addWorkDays = function(startDate, days) {
     return date;
 }
 
+var getDDMMYYY = function(date) {
+
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1;
+    var yyyy = date.getFullYear();
+
+    dd = dd < 10 ? "0" + dd : dd;
+    mm = mm < 10 ? "0" + mm : mm;
+
+    return dd + "-" + mm + "-" + yyyy + "";
+}
+
 // Check if projects can be delivered in time
 var isDispo = function() {
+
+    $("#displayResult").html("");
+    var listDom = $("#displayResult");
 
     // Number of employees on dev or project side
     var countDevEmployee = 0;
@@ -91,24 +118,23 @@ var isDispo = function() {
 
     projects.forEach(project => {
 
-        console.log(project.client);
-        console.log("project.dateStartDev: " + dateStartDev);
-        console.log("project.dateStartProj: " + dateStartProj);
-
+        listDom.append("<h3>" + project.client + "</h3>");
+        listDom.append("<div>Date début développement : " + getDDMMYYY(dateStartDev) + "</div>");
+        listDom.append("<div>Date début gestion de projet : " + getDDMMYYY(dateStartProj) + "</div></br>");
         
         // Get number of days remaining to complete project
         jourDH = Math.round(project.remainDevDays / countDevEmployee);
         jourPH = Math.round(project.remainProjDays / countProjEmployee);
 
-        console.log("jour à travailler pour l'équipe dev :" + jourDH);
-        console.log("jour à travailler pour l'equipe proj  :" + jourPH);
+        listDom.append("<div>Nombre de jour à travailler pour l'équipe de développement : " + jourDH + "</div>");
+        listDom.append("<div>Nombre de jour à travailler pour l'équipe de gestion de projet : " + jourPH + "</div></br>");
         
         // Get working days remaining until end of project
         var globalDevDaysRemaining = getBusinessDatesCount(dateStartDev, new Date(project.shipment));
         var globalProjDaysRemaining = getBusinessDatesCount(dateStartProj, new Date(project.shipment));
         
-        console.log("globalDevDaysRemaining :" + globalDevDaysRemaining);
-        console.log("globalProjDaysRemaining :" + globalProjDaysRemaining);
+        listDom.append("<div>Nombre de jour ouvré disponible pour le développement : " + globalDevDaysRemaining + "</div>");
+        listDom.append("<div>Nombre de jour ouvré disponible pour la gestion de projet : " + globalProjDaysRemaining + "</div></br>");
 
         // Check that number of working days necessary is inferior to remaining days until end of project, else we are in deep shit
         if(jourDH > globalDevDaysRemaining || jourPH > globalProjDaysRemaining) {
@@ -121,8 +147,8 @@ var isDispo = function() {
             dateStartProj = addWorkDays(dateFinProj, 1);
         }
 
-        console.log("project.dateFinDev: " + dateFinDev);
-        console.log("project.dateFinProj: " + dateFinProj);
+        listDom.append("<div>Date de fin du développement : " + dateFinDev + "</div>");
+        listDom.append("<div>Date de fin de la gestion de projet : " + dateFinProj + "</div>");        
     });
 
     return canDeliver;

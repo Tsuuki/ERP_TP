@@ -7,6 +7,9 @@ function initialize () {
     const shouldQuit = makeSingleInstance()
     if (shouldQuit) return app.quit()
 
+    let mainWindow;
+    let employeesWindow;
+
     function createWindow () {
 
         const windowOptions = {

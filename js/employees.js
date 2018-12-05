@@ -1,11 +1,31 @@
-const WindowBtnEmployees = document.getElementById('manageEmployees')
+let WindowBtnEmployees = $('#manageEmployees');
+let empArea = $("#empArea");
+let globalEfficiency; 
+let validateEmp;
+let alreadyAttachListener = false;
 
-WindowBtnEmployees.addEventListener('click', (event) => {
-  const modalPath = path.join('file://', __dirname, '/view/employees.html')
-  console.log(modalPath);
-  let win = new BrowserWindow({ width: 400, height: 320 })
+WindowBtnEmployees.click(() => {
+	empArea.toggle();
 
-  win.on('close', () => { win = null })
-  win.loadURL(modalPath)
-  win.show()
-})
+	if(empArea.is(":visible")) {
+		validateEmp = $("#validateEmp");
+		globalEfficiency = $("#globalEfficiency");
+		attachListener();
+	}
+});
+
+attachListener = function () {
+	if(!alreadyAttachListener) {
+		validateEmp.on("click", validateData);
+		alreadyAttachListener = true;
+	}
+}
+
+validateData = function() {
+	if(!isNaN(globalEfficiency.val()) &&  globalEfficiency.val() !== "" && globalEfficiency.val() >= 0) {
+		employees.forEach(element => {
+			element.efficiency = globalEfficiency.val();
+		});
+		displayEmployees();
+	}
+}
