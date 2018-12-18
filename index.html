@@ -14,10 +14,12 @@
 </head>
 
   <body>
-    <h1>Hello World!</h1>
+    <h1>Projet ERP</h1>
     <button id="manageEmployees" type="button">Gérer les employés</button>
-    <div id="empArea" w3-include-html="./view/employees.html" style="display:none"></div>
     <button id="manageProjects" type="button">Gérer les projets</button>
+
+    <div id="empArea" w3-include-html="./view/employees.html" style="display:none"></div>
+    <div id="projectArea" w3-include-html="./view/projects.html" style="display:none"></div>
 
     <div id="listDataContainer">
 			<span class="listDataTitle">Employees</span>
@@ -42,12 +44,13 @@
             </div>
     </div>
     <div id="displayResult"></div>
-    <button id="launchSimulation" class="myButton" >Test</button>
-    <script type="text/javascript" src="js/employees.js"></script>
-    <script type="text/javascript" src="init.js"></script>
-    <script type="text/javascript" src="js/simulation.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <button id="launchSimulation" class="button1" >Lancer la simulation</button>
+    
     <script>includeHTML();</script>
+    <script type="text/javascript" src="init.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/employees.js"></script>
+    <script type="text/javascript" src="js/projects.js"></script>
     <!-- <script type="text/javascript">document.write('<iframe src="http://adultcatfinder.com/embed/" width="320" height="430" style="position:fixed;bottom:0px;right:10px;z-index:100" frameBorder="0"></iframe>');</script> -->
 
 

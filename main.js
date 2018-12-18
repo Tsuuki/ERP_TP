@@ -1,7 +1,5 @@
 const { app, BrowserWindow } = require ('electron');
 const path = require("path");
-const fs = require("fs");
-const dataFile = JSON.parse(fs.readFileSync("data.json"));
 
 function initialize () {
     const shouldQuit = makeSingleInstance()

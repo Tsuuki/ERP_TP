@@ -13,6 +13,7 @@ displayEmployees();
 
 // Insert project data into DOM
 var displayProject = function() {
+
     $("#listDataProj").html("");
     var listDom = $("#listDataProj");
 
@@ -72,7 +73,36 @@ var addWorkDays = function(startDate, days) {
     return date;
 }
 
-var getDDMMYYY = function(date) {
+// function to add working days on date.
+var subWorkDays = function(endDate, days) {
+    if(isNaN(days)) {
+        console.log("Value provided for \"days\" was not a number");
+        return
+    }
+    if(!(endDate instanceof Date)) {
+        console.log("Value provided for \"startDate\" was not a Date object");
+        return
+    }
+
+    var date = new Date(endDate.getTime());
+    var dow = date.getDay();
+    var daysToSub = parseInt(days);
+    if (dow == 0) // Sunday
+        daysToSub += 2;
+    if (dow + daysToSub >= 6) {
+        var remainingWorkDays = daysToSub - (5 - dow);
+        daysToSub += 2;
+        if (remainingWorkDays > 5) {
+            daysToSub += 2 * Math.floor(remainingWorkDays / 5);
+            if (remainingWorkDays % 5 == 0)
+            daysToSub -= 2;
+        }
+    }
+    date.setDate(date.getDate() - daysToSub);
+    return date;
+}
+
+var getDDMMYYY = function(date, american) {
 
     var dd = date.getDate();
     var mm = date.getMonth() + 1;
@@ -80,6 +110,9 @@ var getDDMMYYY = function(date) {
 
     dd = dd < 10 ? "0" + dd : dd;
     mm = mm < 10 ? "0" + mm : mm;
+
+    if(american)
+        return yyyy + "-" + mm + "-" + dd + "";
 
     return dd + "-" + mm + "-" + yyyy + "";
 }
@@ -136,8 +169,9 @@ var isDispo = function() {
         });
         
         // Get number of days remaining to complete project
-        jourDH = Math.ceil(project.remainDevDays / countDevEmployee * (100 / efficiency));
-        jourPH = Math.ceil(project.remainProjDays / countProjEmployee * (100 / efficiency));
+        jourDH = Math.ceil((project.remainDevDays / countDevEmployee) / (efficiency / 100));
+        jourPH = Math.ceil((project.remainProjDays / countProjEmployee) / (efficiency / 100));
+        
 
         listDom.append("<div>Nombre de jour à travailler pour l'équipe de développement : " + jourDH + "</div>");
         listDom.append("<div>Nombre de jour à travailler pour l'équipe de gestion de projet : " + jourPH + "</div></br>");
@@ -149,41 +183,80 @@ var isDispo = function() {
         listDom.append("<div>Nombre de jour ouvré disponible pour le développement : " + globalDevDaysRemaining + "</div>");
         listDom.append("<div>Nombre de jour ouvré disponible pour la gestion de projet : " + globalProjDaysRemaining + "</div></br>");
 
-        // Check that number of working days necessary is inferior to remaining days until end of project, else we are in deep shit
-        if(jourDH > globalDevDaysRemaining) {
-            canDeliver = false;
-            console.log("On manque de ressources de dev, on sera short le " + new Date(project.shipment));
-        } else if(jourPH > globalProjDaysRemaining) {
-            canDeliver = false;
-            console.log("On manque de ressources de gestion de projet, on sera short le " + new Date(project.shipment));
-        }
-
+        let saveStartDate = new Date(dateStartDev);
+        let saveStartProjDate = new Date(dateStartProj);
         dateFinDev = addWorkDays(dateStartDev, jourDH);
         dateFinProj = addWorkDays(dateStartProj, jourPH);
         dateStartDev = addWorkDays(dateFinDev, 1);
         dateStartProj = addWorkDays(dateFinProj, 1);
-        
 
         listDom.append("<div>Date de fin du développement : " + getDDMMYYY(dateFinDev) + "</div>");
-        listDom.append("<div>Date de fin de la gestion de projet : " + getDDMMYYY(dateFinProj) + "</div>");        
+        listDom.append("<div>Date de fin de la gestion de projet : " + getDDMMYYY(dateFinProj) + "</div></br>"); 
+
+        let dateMissed = 0;
+
+        // Check that number of working days necessary is inferior to remaining days until end of project, else we are in deep shit
+        if(jourDH > globalDevDaysRemaining) {
+            canDeliver = false;
+            dateMissed = Math.round(Math.abs((dateFinDev - new Date(project.shipment).getTime()) / (24*60*60*1000)));
+
+            listDom.append("<div style=\"color:red;\">Retard sur le développement de : " + dateMissed + " jours</div>");
+            listDom.append("<div style=\"color:red;\">Date de fin demandée : " + getDDMMYYY(new Date(project.shipment)) + "</div>");
+
+            let nbRes = calculateNecessaryRessource(globalDevDaysRemaining, jourDH * countDevEmployee)
+            listDom.append("<div style=\"color:red;\">Il faut <b>" + nbRes + " </b> développeurs sur le projet pour terminer dans les temps</div>");
+
+            let newDateWithRessource = calculateNewDateWithRessource(project.remainDevDays, nbRes, efficiency, globalDevDaysRemaining, saveStartDate);
+
+            listDom.append("<div style=\"color:green;\">Avec <b>" + (nbRes - countDevEmployee) + " </b> développeurs supplémentaires et une efficacité <b>" + efficiency + " %</b> le développement serait terminé le " + getDDMMYYY(newDateWithRessource) + "</div>");
+            listDom.append("<div style=\"color:green;\">Il faut les recruter au plus tard le <b>" + getDDMMYYY(calculateHiringDate(saveStartDate)) + " </b></div></br>");
+        }
+        
+        if(jourPH > globalProjDaysRemaining) {
+            canDeliver = false;
+            dateMissed = Math.round(Math.abs((dateFinProj - new Date(project.shipment).getTime()) / (24*60*60*1000)));
+
+            listDom.append("<div style=\"color:red;\">Retard sur la gestion de projet de : " + dateMissed + " jours</div>");
+            listDom.append("<div style=\"color:red;\">Date de fin demandée : " + getDDMMYYY(new Date(project.shipment)) + "</div>");
+
+            let nbResP = calculateNecessaryRessource(globalProjDaysRemaining, jourPH * countProjEmployee)
+            listDom.append("<div style=\"color:red;\">Il faut <b>" + nbResP + " </b> chef de projet pour terminer la gestion dans les temps</div>");
+
+            let newDateWithRessourceP = calculateNewDateWithRessource(project.remainProjDays, nbResP, efficiency, globalProjDaysRemaining, saveStartProjDate);
+
+            listDom.append("<div style=\"color:green;\">Avec <b>" + (nbResP - countProjEmployee) + " </b> chefs de projet supplémentaires et une efficacité <b>" + efficiency + " %</b> la gestion de projet serait terminée le " + getDDMMYYY(newDateWithRessourceP) + "</div>");
+            listDom.append("<div style=\"color:green;\">Il faut les recruter au plus tard le <b>" + getDDMMYYY(calculateHiringDate(saveStartProjDate)) + " </b></div></br>");
+
+        }
+
     });
 
     return canDeliver;
 }
 
+let calculateNecessaryRessource = function(nbDaysWork, ndDaysWorked) {
+    return Math.ceil(ndDaysWorked / nbDaysWork); 
+};
+
+let calculateNewDateWithRessource = function(workDay, nbRes, efficiency, globalDays, startDate) {
+    return addWorkDays(new Date(startDate), Math.ceil(workDay / nbRes * 100 / efficiency));
+}
+
+let calculateHiringDate = function (startDate) {
+
+    let date = new Date(startDate);
+    date.setDate(date.getDate() - 120);
+
+    if(date.getDay() == 0)
+        date.setDate(date.getDate() - 2);
+
+    if(date.getDay() == 6)
+        date.setDate(date.getDate() - 1);    
+    
+    return date;
+}
+
 $("#launchSimulation").click(function() {
     sortProjectByDate(projects);
     console.log(isDispo());
-});
-
-const windowBtnProjects = document.getElementById('manageProjects');
-
-windowBtnProjects.addEventListener('click', (event) => {
-  const modalPath = path.join('file://', __dirname, '/view/projects.html')
-  console.log(modalPath);
-  let win = new BrowserWindow({ width: 400, height: 320 })
-
-  win.on('close', () => { win = null })
-  win.loadURL(modalPath)
-  win.show()
 });

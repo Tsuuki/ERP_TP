@@ -22,6 +22,7 @@ attachListener = function () {
 }
 
 validateData = function() {
+	console.log("Try validating Employees");
 	if(!isNaN(globalEfficiency.val()) &&  globalEfficiency.val() !== "" && globalEfficiency.val() >= 0) {
 		employees.forEach(element => {
 			element.efficiency = globalEfficiency.val();

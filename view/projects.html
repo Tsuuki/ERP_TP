@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>ERP : Mohamed, Emilie, Jordan, Quentin</title>
-  </head>
-  <body>
-    <h1>Gestion des projets</h1>
-    <form id="projectForm">
-      Nom de l'entreprise :<br>
-      <input type="text" name="client"><br>
-      Date de début :<br>
-      <input type="date" name="dateStart"><br>
-      Date de livraison :<br>
-      <input type="date" name="shipment"><br>
-      <button id="createProject" onclick="addProject()">créer</button>
-    </form> 
-  </body>
-  <script type="text/javascript" src="../js/projects.js"></script>
-</html>
+<h3 style="margin: 15px;">Gestion des projets</h3>
+
+<div>
+  <div class="projectFields"><span>Nom du projet : </span><input type="text" id="projectName"></div>
+  <div class="projectFields"><span>Nombre jour dev : </span><input type="number" id="projectDevDays" min="0"></div>
+  <div class="projectFields"><span>Nombre jour proj : </span><input type="number" id="projectProjDays" min="0"></div>
+  <div class="projectFields"><span>Date de début au plus tard : </span><input type="date" id="projectStartDate"></div>
+  <div class="projectFields"><span>Date de fin : </span><input type="date" id="projectEndDate"></div>
+
+  <button id="validateProject" type="button">Valider</button>
+</div>

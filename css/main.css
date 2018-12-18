@@ -2,10 +2,6 @@ body {
     -webkit-app-region: drag;
 }
 
-h1 {
-    color: red;
-}
-
 #listDataContainer .listDataTitle {
     font-size: 20px;
     font-weight: bold;
@@ -29,4 +25,28 @@ h1 {
 
 #listDataProj .legend {
     font-weight: bold;
+}
+
+.projectFields {
+    margin-bottom: 5px;
+}
+
+.button1 {
+    display:block;
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin: 3em 5em;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    text-align:center;
+    transition: all 0.2s;
+}
+
+.button1:hover{
+    background-color:rgb(102, 102, 102);
+    color: white;
+    cursor: pointer;
 }
