@@ -7,13 +7,16 @@
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
   
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script> <!-- Resolve import problem with JQuery -->
-		<script src="jquery.js"></script>
-		<script>if (window.module) module = window.module;</script> <!-- Resolve import problem with JQuery -->
-  </head>
+	<script src="jquery.js"></script>
+	<script>if (window.module) module = window.module;</script> <!-- Resolve import problem with JQuery -->
+    <script type="text/javascript" src="js/include.js"></script>
+
+</head>
 
   <body>
     <h1>Hello World!</h1>
     <button id="manageEmployees" type="button">Gérer les employés</button>
+    <div id="empArea" w3-include-html="./view/employees.html" style="display:none"></div>
     <button id="manageProjects" type="button">Gérer les projets</button>
 
     <div id="listDataContainer">
@@ -38,11 +41,15 @@
                 </div>
             </div>
     </div>
-    <button id="launchSimulation">Test</button>
-    <script type="text/javascript" src="js/utils.js"></script>
+    <div id="displayResult"></div>
+    <button id="launchSimulation" class="myButton" >Test</button>
     <script type="text/javascript" src="js/employees.js"></script>
     <script type="text/javascript" src="init.js"></script>
     <script type="text/javascript" src="js/simulation.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>	
+    <script type="text/javascript" src="js/index.js"></script>
+    <script>includeHTML();</script>
+    <!-- <script type="text/javascript">document.write('<iframe src="http://adultcatfinder.com/embed/" width="320" height="430" style="position:fixed;bottom:0px;right:10px;z-index:100" frameBorder="0"></iframe>');</script> -->
+
+
   </body>
 </html>
