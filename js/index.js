@@ -204,12 +204,19 @@ var isDispo = function() {
             listDom.append("<div style=\"color:red;\">Date de fin demandée : " + getDDMMYYY(new Date(project.shipment)) + "</div>");
 
             let nbRes = calculateNecessaryRessource(globalDevDaysRemaining, jourDH * countDevEmployee)
-            listDom.append("<div style=\"color:red;\">Il faut <b>" + nbRes + " </b> développeurs sur le projet pour terminer dans les temps</div>");
+            
+            if(isFinite(nbRes)) {
+                listDom.append("<div style=\"color:red;\">Il faut <b>" + nbRes + " </b> développeurs sur le projet pour terminer dans les temps</div>");
 
-            let newDateWithRessource = calculateNewDateWithRessource(project.remainDevDays, nbRes, efficiency, globalDevDaysRemaining, saveStartDate);
+                let newDateWithRessource = calculateNewDateWithRessource(project.remainDevDays, nbRes, efficiency, globalDevDaysRemaining, saveStartDate);
 
-            listDom.append("<div style=\"color:green;\">Avec <b>" + (nbRes - countDevEmployee) + " </b> développeurs supplémentaires et une efficacité <b>" + efficiency + " %</b> le développement serait terminé le " + getDDMMYYY(newDateWithRessource) + "</div>");
-            listDom.append("<div style=\"color:green;\">Il faut les recruter au plus tard le <b>" + getDDMMYYY(calculateHiringDate(saveStartDate)) + " </b></div></br>");
+                listDom.append("<div style=\"color:green;\">Avec <b>" + (nbRes - countDevEmployee) + " </b> développeurs supplémentaires et une efficacité <b>" + efficiency + " %</b> le développement serait terminé le " + getDDMMYYY(newDateWithRessource) + "</div>");
+                listDom.append("<div style=\"color:green;\">Il faut les recruter au plus tard le <b>" + getDDMMYYY(calculateHiringDate(saveStartDate)) + " </b></div></br>");
+            }
+            else {
+                listDom.append("<div style=\"color:red;\">Il faut recruter des développeurs sur le projet précedent pour estimer les ressources nécessaires</div></br>");
+            }
+            
         }
         
         if(jourPH > globalProjDaysRemaining) {
@@ -220,13 +227,18 @@ var isDispo = function() {
             listDom.append("<div style=\"color:red;\">Date de fin demandée : " + getDDMMYYY(new Date(project.shipment)) + "</div>");
 
             let nbResP = calculateNecessaryRessource(globalProjDaysRemaining, jourPH * countProjEmployee)
-            listDom.append("<div style=\"color:red;\">Il faut <b>" + nbResP + " </b> chef de projet pour terminer la gestion dans les temps</div>");
+            
+            if(isFinite(nbResP)) {
+                listDom.append("<div style=\"color:red;\">Il faut <b>" + nbResP + " </b> chef de projet pour terminer la gestion dans les temps</div>");
 
-            let newDateWithRessourceP = calculateNewDateWithRessource(project.remainProjDays, nbResP, efficiency, globalProjDaysRemaining, saveStartProjDate);
+                let newDateWithRessourceP = calculateNewDateWithRessource(project.remainProjDays, nbResP, efficiency, globalProjDaysRemaining, saveStartProjDate);
 
-            listDom.append("<div style=\"color:green;\">Avec <b>" + (nbResP - countProjEmployee) + " </b> chefs de projet supplémentaires et une efficacité <b>" + efficiency + " %</b> la gestion de projet serait terminée le " + getDDMMYYY(newDateWithRessourceP) + "</div>");
-            listDom.append("<div style=\"color:green;\">Il faut les recruter au plus tard le <b>" + getDDMMYYY(calculateHiringDate(saveStartProjDate)) + " </b></div></br>");
-
+                listDom.append("<div style=\"color:green;\">Avec <b>" + (nbResP - countProjEmployee) + " </b> chefs de projet supplémentaires et une efficacité <b>" + efficiency + " %</b> la gestion de projet serait terminée le " + getDDMMYYY(newDateWithRessourceP) + "</div>");
+                listDom.append("<div style=\"color:green;\">Il faut les recruter au plus tard le <b>" + getDDMMYYY(calculateHiringDate(saveStartProjDate)) + " </b></div></br>");
+            }
+            else {
+                listDom.append("<div style=\"color:red;\">Il faut recruter des chefs de projet sur le projet précedent pour estimer les ressources nécessaires</div></br>");
+            }
         }
 
     });
