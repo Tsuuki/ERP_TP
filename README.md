@@ -55,7 +55,7 @@ Les différentes informations affichées sont :
 
 ## Contributeurs 
 
-ABDOUL-MALIK Emilie 
+ABDOUL MALIK Emilie 
 
 AZZOUZ Mohamed 
 
