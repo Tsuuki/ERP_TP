@@ -54,7 +54,7 @@ Les différentes informations affichées sont :
  * D - Dans la gestion des projets, ajouter le projet SONI, puis changer l'efficacité a 120% et relancer la simulation.
  * E - La date d'embauche est indiqué quand un projet à du retard
  
- ## Résultat
+ ## Résultats
 
   * A - Il est possible de livrer les 3 clients dans les temps
     * Le dernier projet se termine le 27/11/2018
