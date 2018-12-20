@@ -1,18 +1,17 @@
 # ERP_TP
 
-## Installation
- * Cloner ou télécharger le dossier
- * Se rendre dans le dossier ERP_TP et effectuer la commande `npm install`
-
-## Lancement de l'application
-
+## Installation et lancement
+ 
 ### Première option
- * Dans le dossier ERP_TP effectuer la commande `npm start`
+ * Télécharger le ZIP présent sur le Drive
+ * Décompresser l'archive
+ * Dans le dossier executer ERP_TP.exe
 
 ### Deuxième option
- * Dans le dossier ERP_TP effectuer la commande `npm run build`
- * Executer le fichier `release-builds/ERP_TP-win32-ia32/ERP_TP.exe`
-
+ * Cloner ou télécharger le dossier
+ * Se rendre dans le dossier ERP_TP et effectuer la commande `npm install`
+ * Dans le dossier ERP_TP effectuer la commande `npm start`
+ 
 ## Hypothèses
 
  * Les employés travaillent les jours fériés.
@@ -22,6 +21,8 @@
  * Si une équipe (développement ou gestion de projet) finit avant l'autre, elle peut passer au projet suivant.
  * Les jours de travail sont des entiers (pas de demi-journées).
  * Les employés supplémentaires embauchés ne rejoignent pas le projet en cours de route. Ils sont donc embauchés 4 mois avant le projet qui présente un retard.
+ * Les employés embauchés ont la même efficacité que les autres.
+ * Le nombre de ressource supplémentaire est calculé pour terminer le projet dans les temps, en réalité, il faudrait ajouter de la marge
 
 ## Manuel utilisateur
 
@@ -52,6 +53,22 @@ Les différentes informations affichées sont :
  * C - Dans la gestion des employés, passer l'efficacité à 80% puis relancer la simulation.
  * D - Dans la gestion des projets, ajouter le projet SONI, puis changer l'efficacité a 120% et relancer la simulation.
  * E - La date d'embauche est indiqué quand un projet à du retard
+ 
+ ## Résultat
+
+  * A - Il est possible de livrer les 3 clients dans les temps
+    * Le dernier projet se termine le 27/11/2018
+  * B - Pas de problème
+  * C - Avec une efficience de 80%
+    * Il n'est pas possible de livrer HTC VR
+    * Le projet se termine 10 jours en retard (11/01/2019)
+  * D - Il n'est pas possible de valider la date du 01/01/2019
+    * Le projet a 56 jours de développement de retard
+    * Le projet a 15 jours de retard sur la gestion de projet
+    * Il faudrait embaucher des développeurs et des chefs de projet supplémentaire
+  * E - Il faut embaucher 120 jours avant le début du projet :
+    * 3 Développeurs pour que le développement se termine le 28/12/2018
+    * 1 Chef de projet pour que la gestion de projet se termine le 30/12/2018
 
 ## Contributeurs 
 
